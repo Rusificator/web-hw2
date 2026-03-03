@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отчёт по лабораторной работе №2</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Отчёт по лабораторной работе №2</h1>
+        
+
+        
+        <section class="task">
+            <h2>Пункт 1. Получить главную страницу методом GET в протоколе HTTP/1.0</h2>
+            <div class="command">
+                <strong>Запрос:</strong>
+                <pre><code>GET / HTTP/1.0
+Host: u82457.kubsu-dev.ru</code></pre>
+            </div>
+            <div class="description">
+                <p><strong>Что делает:</strong> Отправляет запрос на получение корневого ресурса (главной страницы) с использованием версии HTTP/1.0. В этой версии после ответа соединение обычно закрывается.</p>
+                <p><strong>Результат (скриншот l1.png):</strong></p>
+                <ul>
+                    <li>Статус: <code>HTTP/1.1 200 OK</code> – запрос выполнен успешно.</li>
+                    <li>Заголовки: <code>Server: Apache/2.4.58 (Ubuntu)</code>, <code>Content-Length: 335</code>, <code>Content-Type: text/html; charset=UTF-8</code>.</li>
+                    <li>Тело ответа содержит вывод PHP-скрипта (сообщение <strong>"PHP is working!"</strong> и ошибку подключения к БД, что не влияет на корректность получения страницы).</li>
+                </ul>
+            </div>
+            <div class="screenshot">
+                <img src="screenshots/l1.png" alt="GET / HTTP/1.0">
+                <p class="caption">Скриншот 1: GET / HTTP/1.0 (файл l1.png)</p>
+            </div>
+        </section>
+
+        
+        <section class="task">
+            <h2>Пункт 2. Получить внутреннюю страницу методом GET в протоколе HTTP/1.1</h2>
+            <div class="command">
+                <strong>Запрос:</strong>
+                <pre><code>GET /index.php HTTP/1.1
+Host: u82457.kubsu-dev.ru
+Connection: close</code></pre>
+            </div>
+            <div class="description">
+                <p><strong>Что делает:</strong> Запрашивает конкретный ресурс – <code>index.php</code> – с использованием HTTP/1.1. Заголовок <code>Connection: close</code> указывает серверу закрыть соединение после ответа (удобно для ручных запросов).</p>
+                <p><strong>Результат (скриншот l2.png):</strong></p>
+                <ul>
+                    <li>Статус: <code>HTTP/1.1 200 OK</code> – файл найден и отдан.</li>
+                    <li>Заголовки аналогичны пункту 1: <code>Content-Type: text/html; charset=UTF-8</code>, длина 335 байт.</li>
+                    <li>Тело содержит тот же вывод PHP-скрипта, что подтверждает успешное получение страницы.</li>
+                </ul>
+            </div>
+            <div class="screenshot">
+                <img src="screenshots/l2.png" alt="GET /index.php HTTP/1.1">
+                <p class="caption">Скриншот 2: GET /index.php HTTP/1.1 (файл l2.png)</p>
+            </div>
+        </section>
+
+        
+        <section class="task">
+            <h2>Пункт 3. Определить размер файла file.tar.gz, не скачивая его</h2>
+            <div class="command">
+                <strong>Запрос:</strong>
+                <pre><code>HEAD /hw2/file.tar.gz HTTP/1.1
+Host: u82457.kubsu-dev.ru
+Connection: close</code></pre>
+            </div>
+            <div class="description">
+                <p><strong>Что делает:</strong> Метод <code>HEAD</code> аналогичен <code>GET</code>, но сервер возвращает только заголовки, без тела. Это позволяет узнать размер файла (заголовок <code>Content-Length</code>) без его загрузки.</p>
+                <p><strong>Результат (скриншот l3.png):</strong></p>
+                <ul>
+                    <li>Статус: <code>HTTP/1.1 200 OK</code> – файл существует.</li>
+                    <li>Заголовок <code>Content-Length: 11335</code> – размер файла в байтах.</li>
+                    <li>Тип файла: <code>Content-Type: application/x-gzip</code> (gzip-архив).</li>
+                </ul>
+            </div>
+            <div class="screenshot">
+                <img src="screenshots/l3.png" alt="HEAD /hw2/file.tar.gz">
+                <p class="caption">Скриншот 3: HEAD /hw2/file.tar.gz (файл l3.png)</p>
+            </div>
+        </section>
+
+       
+        <section class="task">
+            <h2>Пункт 4. Определить медиатип ресурса /image.png</h2>
+            <div class="command">
+                <strong>Запрос:</strong>
+                <pre><code>HEAD /hw2/image.png HTTP/1.1
+Host: u82457.kubsu-dev.ru
+Connection: close</code></pre>
+            </div>
+            <div class="description">
+                <p><strong>Что делает:</strong> Снова используем <code>HEAD</code>, чтобы получить заголовки для <code>image.png</code> и определить его MIME-тип.</p>
+                <p><strong>Результат (скриншот l4.png):</strong></p>
+                <ul>
+                    <li>Статус: <code>HTTP/1.1 200 OK</code> – файл найден.</li>
+                    <li>Заголовок <code>Content-Type: image/png</code> – медиатип PNG-изображения.</li>
+                    <li>Размер файла: <code>Content-Length: 10506</code> байт.</li>
+                </ul>
+            </div>
+            <div class="screenshot">
+                <img src="screenshots/l4.png" alt="HEAD /hw2/image.png">
+                <p class="caption">Скриншот 4: HEAD /hw2/image.png (файл l4.png)</p>
+            </div>
+        </section>
+
+        
+        <section class="task">
+            <h2>Пункт 5. Отправить комментарий на сервер по адресу /index.php (POST)</h2>
+            <div class="command">
+                <strong>Запрос:</strong>
+                <pre><code>POST /index.php HTTP/1.1
+Host: u82457.kubsu-dev.ru
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 12
+Connection: close
+
+comment=Hello</code></pre>
+                <p><em>Тело запроса: <code>comment=Hello</code> (длина 12 байт).</em></p>
+            </div>
+            <div class="description">
+                <p><strong>Что делает:</strong> Метод <code>POST</code> передаёт данные на сервер. Здесь имитируется отправка формы с полем <code>comment</code>. Заголовок <code>Content-Type</code> указывает формат данных, <code>Content-Length</code> – их длину.</p>
+                <p><strong>Результат (скриншот l5.png):</strong></p>
+                <ul>
+                    <li>Статус: <code>HTTP/1.1 200 OK</code> – запрос принят и обработан (несмотря на ошибку в PHP).</li>
+                    <li>Заголовки ответа содержат <code>Content-Type: text/html; charset=UTF-8</code> и длину 335 байт.</li>
+                    <li>Тело ответа (с ошибкой БД) подтверждает, что скрипт <code>index.php</code> выполнился и вернул результат.</li>
+                </ul>
+            </div>
+            <div class="screenshot">
+                <img src="screenshots/l5.png" alt="POST /index.php">
+                <p class="caption">Скриншот 5: POST /index.php (файл l5.png)</p>
+            </div>
+        </section>
+
+        
+        <section class="task">
+            <h2>Пункт 6. Получить первые 100 байт файла /file.tar.gz</h2>
+            <div class="command">
+                <strong>Запрос:</strong>
+                <pre><code>GET /hw2/file.tar.gz HTTP/1.1
+Host: u82457.kubsu-dev.ru
+Range: bytes=0-99
+Connection: close</code></pre>
+            </div>
+            <div class="description">
+                <p><strong>Что делает:</strong> Заголовок <code>Range</code> запрашивает не весь файл, а только указанный диапазон байт (в данном случае с 0 по 99 включительно – первые 100 байт). Это позволяет частично загрузить файл.</p>
+                <p><strong>Результат (скриншот l6.png):</strong></p>
+                <ul>
+                    <li>Статус: <code>HTTP/1.1 206 Partial Content</code> – сервер вернул частичное содержимое.</li>
+                    <li>Заголовок <code>Content-Range: bytes 0-99/11335</code> – указан переданный диапазон и полный размер.</li>
+                    <li><code>Content-Length: 100</code> – длина переданных данных.</li>
+                    <li>Тело содержит первые 100 байт архива (в консоли отображаются как нечитаемые символы – это нормально).</li>
+                </ul>
+            </div>
+            <div class="screenshot">
+                <img src="screenshots/l6.png" alt="GET с Range">
+                <p class="caption">Скриншот 6: GET /hw2/file.tar.gz с Range (файл l6.png)</p>
+            </div>
+        </section>
+
+        
+        <section class="task">
+            <h2>Пункт 7. Определить кодировку ресурса /index.php</h2>
+            <div class="command">
+                <strong>Запрос:</strong>
+                <pre><code>HEAD /index.php HTTP/1.1
+Host: u82457.kubsu-dev.ru
+Connection: close</code></pre>
+            </div>
+            <div class="description">
+                <p><strong>Что делает:</strong> Снова используем <code>HEAD</code>, чтобы узнать кодировку страницы, которая может быть указана в заголовке <code>Content-Type</code> после точки с запятой (<code>charset=...</code>).</p>
+                <p><strong>Результат (скриншот l7.png):</strong></p>
+                <ul>
+                    <li>Статус: <code>HTTP/1.1 200 OK</code> – ресурс доступен.</li>
+                    <li>Заголовок <code>Content-Type: text/html; charset=UTF-8</code> – явно указана кодировка <strong>UTF-8</strong>.</li>
+                    <li>Другие заголовки: <code>Server</code>, <code>Date</code>, <code>Connection</code>.</li>
+                </ul>
+            </div>
+            <div class="screenshot">
+                <img src="screenshots/l7.png" alt="HEAD /index.php">
+                <p class="caption">Скриншот 7: HEAD /index.php (файл l7.png)</p>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
